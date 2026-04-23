@@ -106,4 +106,4 @@ Project/
    ```
 
 ## 🎥 Output Videos
-![Spider Demo](videos/ddpg-spider-step-0-to-step-2000.mp4)
+![Spider Demo](https://github.com/aliahad-py/locomotion-Spider-RL/blob/main/videos/ddpg-spider-step-0-to-step-2000.mp4)
