@@ -106,5 +106,5 @@ Project/
    ```
 
 ## 🎥 Output Videos
-- [DDPG Spider (0–2000 steps)](Videos/ddpg-spider-step-0-to-step-2000.mp4)
+- [DDPG Spider (0–2000 steps)](videos/ddpg-spider-step-0-to-step-2000.mp4)
 
