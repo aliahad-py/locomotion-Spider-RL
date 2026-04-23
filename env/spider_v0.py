@@ -18,7 +18,7 @@ class SpiderEnv(MujocoEnv, utils.EzPickle):
     }
     def __init__(
         self,
-        xml_file="spider.xml",
+        xml_file="./env/assets/spider.xml",
         frame_skip: int = 5,
         default_camera_config: dict[str, float | int] = DEFAULT_CAMERA_CONFIG,
         forward_reward_weight: float = 1,

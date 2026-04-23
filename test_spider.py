@@ -1,91 +1,18 @@
-"""
-from stable_baselines3 import PPO
-from stable_baselines3.common.vec_env import DummyVecEnv, VecNormalize
-import gymnasium as gym
-import numpy as np
-from gymnasium.spaces import Box
-import time
-
-# ================================
-# CONFIG
-# ================================
-ENV_ID = "Spider"
-MODEL_PATH = "spider"
-EPISODES = 100
-
-# ================================
-# ACTION WRAPPER (MUST MATCH TRAINING)
-# ================================
-class ActionScaleWrapper(gym.ActionWrapper):
-    def __init__(self, env, scale=0.8):
-        super().__init__(env)
-        self.scale = scale
-
-        self.action_space = Box(
-            low=-scale,
-            high=scale,
-            shape=env.action_space.shape,
-            dtype=np.float32
-        )
-
-    def action(self, action):
-        return action  # / self.scale   # ✅ FIXED
-
-
-# ================================
-# CREATE ENV
-# ================================
-def make_env():
-    env = gym.make(
-        ENV_ID,
-        max_episode_steps=1000,
-        render_mode="human"
-    )
-    env = ActionScaleWrapper(env, scale=0.8)
-    return env
-
-
-env = DummyVecEnv([make_env])
-
-# ================================
-# LOAD MODEL
-# ================================
-model = PPO.load(MODEL_PATH)
-
-# ================================
-# TEST LOOP
-# ================================
-for episode in range(1, EPISODES + 1):
-    obs = env.reset()
-    done = False
-    total_reward = 0
-    while not done:
-        action, _ = model.predict(obs, deterministic=True)
-        obs, reward, done, info = env.step(action)
-        total_reward += reward[0]
-        # slow down so you can observe behavior
-        time.sleep(0.01)
-        print(f"Action: {action}, Reward: {reward}")
-    print(f"Episode {episode} | Total Reward: {total_reward}")
-
-env.close()
-"""
-
-
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import DummyVecEnv
 import gymnasium as gym
 import numpy as np
 from gymnasium.spaces import Box
+from env import register
 import time
 
+register.register_envs()
 # ================================
 # CONFIG
 # ================================
 ENV_ID = "Spider"
 MODEL_PATH = "spider"
 EPISODES = 100
-
 
 # ================================
 # ✅ Control Frequency Wrapper (MATCH TRAINING)
