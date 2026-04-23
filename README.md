@@ -104,3 +104,7 @@ Project/
    obs, _ = env.reset()
    print("SpiderMaze_UMaze-v0 environment loaded successfully")
    ```
+
+## 🎥 Output Videos
+- [DDPG Spider (0–2000 steps)](Videos/ddpg-spider-step-0-to-step-2000.mp4)
+
