@@ -105,5 +105,9 @@ Project/
    print("SpiderMaze_UMaze-v0 environment loaded successfully")
    ```
 
-## 🎥 Output Videos
-![Spider Demo](https://github.com/aliahad-py/locomotion-Spider-RL/blob/main/videos/ddpg-spider-step-0-to-step-2000.mp4)
+## 🎥 Demo Videos
+https://github.com/user-attachments/assets/891cee29-d6a0-475c-9df1-bce40d891837
+
+
+
+
