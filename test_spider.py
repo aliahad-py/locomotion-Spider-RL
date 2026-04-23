@@ -81,7 +81,6 @@ env = DummyVecEnv([make_env])
 # ================================
 model = PPO.load(MODEL_PATH)
 
-
 # ================================
 # TEST LOOP
 # ================================
@@ -93,9 +92,7 @@ for episode in range(1, EPISODES + 1):
     while not done:
         action, _ = model.predict(obs, deterministic=True)
         obs, reward, done, info = env.step(action)
-
         total_reward += reward[0]
-
         # Slow down visualization (optional)
         time.sleep(0.02)
 
