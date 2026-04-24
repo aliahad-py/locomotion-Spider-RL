@@ -98,7 +98,6 @@ import gymnasium as gym
 from env import register
 
 register.register_envs()
-
 env = gym.make("SpiderMaze_UMaze-v0")
 obs, _ = env.reset()
 
