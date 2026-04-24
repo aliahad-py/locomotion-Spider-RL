@@ -2,6 +2,7 @@
 
 This project provides custom Spider environments for Gymnasium and Gymnasium-Robotics.  
 Unlike the previous approach, environments are now **automatically loaded from the local `env/` folder**, so manual copying into Gymnasium or Gymnasium-Robotics directories is no longer required.
+
 ---
 
 ## Demo Videos
