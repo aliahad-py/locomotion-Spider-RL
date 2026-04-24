@@ -2,6 +2,10 @@
 
 This project provides custom Spider environments for Gymnasium and Gymnasium-Robotics.  
 Unlike the previous approach, environments are now **automatically loaded from the local `env/` folder**, so manual copying into Gymnasium or Gymnasium-Robotics directories is no longer required.
+---
+
+## Demo Videos
+https://github.com/user-attachments/assets/891cee29-d6a0-475c-9df1-bce40d891837
 
 ---
 
@@ -46,7 +50,7 @@ Project/
 ```
 ---
 
-## 📦 Environment Files
+## Environment Files
 
 - **`env/assets/spider.xml`**  
   MuJoCo model file for the Spider robot.
@@ -62,7 +66,7 @@ Project/
 
 ---
 
-## ⚙️ Setup Instructions
+## Setup Instructions
 
 ### 1. Install Dependencies
 
@@ -106,7 +110,7 @@ print("SpiderMaze_UMaze-v0 environment loaded successfully")
 
 ---
 
-## 🧠 Training and Testing
+## Training and Testing
 
 * **`train_spider.py`** → Train Spider locomotion agent
 * **`test_spider.py`** → Evaluate trained Spider agent
@@ -115,7 +119,7 @@ print("SpiderMaze_UMaze-v0 environment loaded successfully")
 
 ---
 
-## 🎥 Videos
+## Videos
 
 The `Videos/` folder contains rollout recordings for different algorithms:
 
@@ -126,14 +130,14 @@ The `Videos/` folder contains rollout recordings for different algorithms:
 
 ---
 
-## 📦 Pretrained Model
+## Pretrained Model
 
 * **`spiderm.zip`**
   Contains a pretrained Spider agent for quick testing.
 
 ---
 
-## ✅ Verification
+## Verification
 
 Run a quick test to confirm everything works:
 
@@ -146,12 +150,6 @@ obs, _ = env.reset()
 
 print("Environment loaded successfully!")
 ```
-
----
-
-
-## 🎥 Demo Videos
-https://github.com/user-attachments/assets/891cee29-d6a0-475c-9df1-bce40d891837
 
 ---
 
