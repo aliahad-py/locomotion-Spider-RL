@@ -1,113 +1,165 @@
 # Project Setup and Environment Registration
 
-This README guides you through adding custom Spider environments to Gymnasium and Gymnasium-Robotics, as well as the overall project structure and file placement.
+This project provides custom Spider environments for Gymnasium and Gymnasium-Robotics.  
+Unlike the previous approach, environments are now **automatically loaded from the local `env/` folder**, so manual copying into Gymnasium or Gymnasium-Robotics directories is no longer required.
 
-## 1. Add the `spider.xml` Model
+---
 
-1. Locate your Gymnasium MuJoCo assets directory:
-   ```
-   <your-python-env>/Lib/site-packages/gymnasium/envs/mujoco/assets
-   ```
-2. Copy `spider.xml` from the project root into this directory:
-   ```bash
-   cp path/to/project/spider.xml <your-python-env>/Lib/site-packages/gymnasium/envs/mujoco/assets/
-   ```
+## 1. Key Update
 
-## 2. Register the Spider Environment
+Previously, environments had to be manually added to Gymnasium’s internal directories.  
+Now, the project uses a **local registration system (`env/register.py`)**, which dynamically registers all environments directly from the project.
 
-1. In the MuJoCo environments folder, add the Python file:
-   ```
-   <your-python-env>/Lib/site-packages/gymnasium/envs/mujoco/spider_v0.py
-   ```
-   with your `SpiderEnv` implementation.
+✔ No manual file copying  
+✔ No modification of site-packages  
+✔ Cleaner and portable setup  
 
-2. Open the `__init__.py` file in:
-   ```
-   <your-python-env>/Lib/site-packages/gymnasium/envs/
-   ```
-3. Add the following registration code:
-   ```python
-   from gymnasium.envs.registration import register
+---
 
-   register(
-       id="Spider-v0",
-       entry_point="gymnasium.envs.mujoco.spider_v0:SpiderEnv",
-       max_episode_steps=1000,
-       reward_threshold=6000.0,
-   )
-   ```
-
-## 3. Add the Custom Maze Environment
-
-1. Copy `spider_maze_v0.py` into the Gymnasium-Robotics maze folder:
-   ```
-   <your-python-env>/Lib/site-packages/gymnasium_robotics/envs/maze/spider_maze_v0.py
-   ```
-2. Update the package `__init__.py` in:
-   ```
-   <your-python-env>/Lib/site-packages/gymnasium_robotics/
-   ```
-   to import or register your custom maze environment, for example:
-   ```python
-   from .envs.maze.spider_maze_v0 import SpiderMaze_UMaze
-
-   __all__ = [
-       # ... other environments ...
-       "SpiderMaze_UMaze",
-   ]
-   ```
-
-## 4. Project Directory Structure
+## 2. Project Directory Structure
 
 Ensure your project root has the following layout:
 
 ```
 Project/
+|── env
+│   ├── assets
+│   |   └── spider.xml
+│   ├── __init__.py
+│   ├── register.py
+│   ├── spider_v0.py
+│   └── spider_maze_v0.py
 ├── Videos/
+│   ├── demo.mp4
 │   ├── ddpg-spider-step-0-to-step-2000.mp4
-│   ├── ppo-ant-step-0-to-step-1000.mp4
-│   ├── ppo-spid-step-0-to-step-1000.mp4
+│   ├── SAC-spid-step-0-to-step-2000.mp4
 │   ├── ppo-spid-step-0-to-step-2000.mp4
 │   ├── ppo-spider-step-0-to-step-1000.mp4
-│   └── td3-spider-step-0-to-step-2000.mp4
+│   └── ppo-spider-step-0-to-step-2000.mp4
+│   └── ppo-spiderMaze1-step-0-to-step-2000.mp4
 ├── main.py
-├── maze_v4.py
-├── spider_maze_v0.py
-├── spider_v0.py
 ├── spiderm.zip
-├── train.py
-├── __init__.py
-└── spider.xml
+├── train_spider.py
+├── test_spider.py
+├── train_spiderMaze.py
+└── test_spiderMaze.py
+```
+---
+
+## 📦 Environment Files
+
+- **`env/assets/spider.xml`**  
+  MuJoCo model file for the Spider robot.
+
+- **`env/spider_v0.py`**  
+  Core Spider locomotion environment.
+
+- **`env/spider_maze_v0.py`**  
+  Maze-based navigation environment for the Spider.
+
+- **`env/register.py`**  
+  Automatically registers all custom environments with Gymnasium.
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Install Dependencies
+
+Make sure you have the required packages installed:
+
+```bash
+pip install -r requirements.txt
+````
+
+---
+
+### 3. Using the Environments
+
+#### Spider Environment
+
+```python
+import gymnasium as gym
+from env import register
+
+register.register_envs()
+env = gym.make("Spider-v0")
+obs, _ = env.reset()
+
+print("Spider-v0 environment loaded successfully")
 ```
 
-- **`Videos/`**: Recorded rollouts for each algorithm and environment.
-- **`main.py`**: Entry point for experiments.
-- **`maze_v4.py`**, **`spider_maze_v0.py`**, **`spider_v0.py`**: Custom environment definitions.
-- **`spiderm.zip`**: Pretrained model archive.
-- **`train.py`**: Training script.
-- **`spider.xml`**: MuJoCo model file.
+---
 
-## 5. Verification and Testing
+#### Spider Maze Environment
 
-1. Restart your Python session or IDE to reload Gymnasium.
-2. Run a quick test:
-   ```python
-   import gymnasium as gym
-   env = gym.make("Spider-v0")
-   obs, _ = env.reset()
-   print("Spider-v0 environment loaded successfully")
-   ```
-3. For the Maze variant:
-   ```python
-   import gymnasium as gym
-   env = gym.make("SpiderMaze_UMaze-v0")
-   obs, _ = env.reset()
-   print("SpiderMaze_UMaze-v0 environment loaded successfully")
-   ```
+```python
+import gymnasium as gym
+from env import register
+
+register.register_envs()
+
+env = gym.make("SpiderMaze_UMaze-v0")
+obs, _ = env.reset()
+
+print("SpiderMaze_UMaze-v0 environment loaded successfully")
+```
+
+---
+
+## 🧠 Training and Testing
+
+* **`train_spider.py`** → Train Spider locomotion agent
+* **`test_spider.py`** → Evaluate trained Spider agent
+* **`train_spiderMaze.py`** → Train maze navigation agent
+* **`test_spiderMaze.py`** → Evaluate maze agent
+
+---
+
+## 🎥 Videos
+
+The `Videos/` folder contains rollout recordings for different algorithms:
+
+* PPO
+* SAC
+* DDPG
+* Spider locomotion and maze navigation demos
+
+---
+
+## 📦 Pretrained Model
+
+* **`spiderm.zip`**
+  Contains a pretrained Spider agent for quick testing.
+
+---
+
+## ✅ Verification
+
+Run a quick test to confirm everything works:
+
+```python
+import gymnasium as gym
+import env.register
+
+env = gym.make("Spider-v0")
+obs, _ = env.reset()
+
+print("Environment loaded successfully!")
+```
+
+---
+
 
 ## 🎥 Demo Videos
 https://github.com/user-attachments/assets/891cee29-d6a0-475c-9df1-bce40d891837
 
+---
 
+## 📝 Notes
 
+* No need to modify Gymnasium or Gymnasium-Robotics source code.
+* No need to copy `spider.xml` into site-packages.
+* Everything is self-contained within the project.
+* Always ensure `env.register` is imported before calling `gym.make()`.
 
